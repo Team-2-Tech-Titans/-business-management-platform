@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './redux/store'; // Import your Redux store if using Redux
+import store from './redux/store';
 
 import AppRouter from './routes/AppRouter';
 import PrivateRoute from './routes/PrivateRoute';
@@ -13,11 +13,11 @@ import OrdersPage from './pages/OrdersPage';
 import FinancialReportsPage from './pages/FinancialReportsPage';
 import UserProfilePage from './pages/UserProfilePage';
 
-import './styles/globals.css'; // Import global styles including TailwindCSS
+import './index.css';
 
 const App = () => {
   return (
-    <Provider store={store}> {/* Wrap the app in Provider if using Redux */}
+    <Provider store={store}>
       <Router>
         <AppRouter>
           <Routes>
