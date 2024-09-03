@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import ProductsPage from '../pages/ProductsPage';
 import OrdersPage from '../pages/OrdersPage';
@@ -10,44 +10,42 @@ import PrivateRoute from './PrivateRoute';
 
 const AppRouter = () => {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route
-                    path="/dashboard"
-                    element={
-                        <PrivateRoute>
-                            <DashboardPage />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/products"
-                    element={
-                        <PrivateRoute>
-                            <ProductsPage />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/orders"
-                    element={
-                        <PrivateRoute>
-                            <OrdersPage />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/profile"
-                    element={
-                        <PrivateRoute>
-                            <UserProfilePage />
-                        </PrivateRoute>
-                    }
-                />
-            </Routes>
-        </Router>
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+                path="/dashboard"
+                element={
+                    <PrivateRoute>
+                        <DashboardPage />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/products"
+                element={
+                    <PrivateRoute>
+                        <ProductsPage />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/orders"
+                element={
+                    <PrivateRoute>
+                        <OrdersPage />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/profile"
+                element={
+                    <PrivateRoute>
+                        <UserProfilePage />
+                    </PrivateRoute>
+                }
+            />
+        </Routes>
     );
 };
 
