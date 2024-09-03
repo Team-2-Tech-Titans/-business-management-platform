@@ -1,6 +1,5 @@
-import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-
-const db = getFirestore();
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { db } from './firebase'
 
 // Fetch all products from Firestore
 export const fetchProducts = async () => {
