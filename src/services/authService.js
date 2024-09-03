@@ -9,11 +9,19 @@ const db = getFirestore();
 export const loginUser = async ({ email, password }) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        return userCredential.user;
+        const user = userCredential.user;
+        return {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,  // Add any other necessary fields
+        };
     } catch (error) {
+        console.error('Login error:', error.message);
         throw new Error(error.message);
     }
 };
+
+
 
 // Logout user
 export const logoutUser = async () => {

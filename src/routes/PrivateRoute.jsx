@@ -3,13 +3,13 @@ import { Navigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 
 const PrivateRoute = ({ children }) => {
-    const { user } = useUser();
+    const { user, loading } = useUser();
 
-    if (!user) {
-        return <Navigate to="/login" replace />;
+    if (loading) {
+        return <div>Loading...</div>; // Optional: Replace with a spinner or loading indicator
     }
 
-    return children;
+    return user ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

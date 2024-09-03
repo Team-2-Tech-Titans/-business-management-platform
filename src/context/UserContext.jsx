@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { loginUser, logoutUser, fetchUserProfile, updateUserProfile } from '../services/authService';
+import { loginUser, logoutUser } from '../services/authService';
 
 const UserContext = createContext();
 
@@ -8,31 +9,37 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUserState] = useState(() => {
+        const savedUser = localStorage.getItem('user');
+        return savedUser ? JSON.parse(savedUser) : null;
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const loadUserProfile = async () => {
-            try {
-                const profileData = await fetchUserProfile();
-                setUser(profileData);
-            } catch (err) {
-                setError('Failed to load user profile.');
-                setUser(null); // Ensure user is set to null on error
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadUserProfile();
+        setLoading(false);
     }, []);
 
+    const setUser = (userData) => {
+        setUserState(userData);
+        if (userData) {
+            try {
+                localStorage.setItem('user', JSON.stringify(userData));
+            } catch (storageError) {
+                console.error('Error saving user data to localStorage:', storageError);
+            }
+        } else {
+            localStorage.removeItem('user');
+        }
+    };
+
     const login = async (credentials) => {
-        setLoading(true); // Start loading state for login
+        setLoading(true);
         try {
             const userData = await loginUser(credentials);
             setUser(userData);
         } catch (err) {
+            console.error('Failed to log in:', err.message);
             setError('Failed to log in.');
             setUser(null);
         } finally {
@@ -49,25 +56,15 @@ export const UserProvider = ({ children }) => {
         }
     };
 
-    const updateUser = async (updatedData) => {
-        try {
-            const updatedUser = await updateUserProfile(updatedData);
-            setUser(updatedUser);
-        } catch (err) {
-            setError('Failed to update user profile.');
-        }
-    };
-
     return (
         <UserContext.Provider
             value={{
                 user,
-                setUser, // <-- Add setUser here
+                setUser,
                 loading,
                 error,
                 login,
                 logout,
-                updateUser,
             }}
         >
             {children}
