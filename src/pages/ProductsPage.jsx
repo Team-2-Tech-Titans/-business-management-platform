@@ -90,7 +90,7 @@ const ProductsPage = () => {
                         {selectedProduct ? (
                             <ProductDetail product={selectedProduct} />
                         ) : (
-                            <p>Select a product to view details</p>
+                            ''
                         )}
                     </div>
                 </div>

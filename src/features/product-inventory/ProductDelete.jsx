@@ -17,10 +17,6 @@ const ProductDelete = ({ productId, productName }) => {
 
     return (
         <div className="p-4 bg-white shadow rounded-lg">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                Delete Product: {productName}
-            </h2>
-
             {error && <p className="text-red-600 mb-4">{error}</p>}
 
             {!isConfirming ? (

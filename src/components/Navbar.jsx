@@ -6,7 +6,7 @@ const Navbar = () => {
     const { logout } = useUser();
 
     return (
-        <nav className="bg-indigo-600 text-white">
+        <nav className="bg-indigo-600 text-white mb-2">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <div className="text-lg font-bold">
                     <Link to="/dashboard">Business Management</Link>

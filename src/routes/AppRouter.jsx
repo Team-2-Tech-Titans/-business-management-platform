@@ -11,6 +11,7 @@ import UserManagementPage from '../pages/UserManagementPage';
 import RegisterPage from '../pages/RegisterPage';  // Import the Register Page
 import ProductForm from '../features/product-inventory/ProductForm'; // Import ProductForm
 import ProductEdit from '../features/product-inventory/ProductEdit'; // Import ProductEdit
+import ProductDetail from '../features/product-inventory/ProductDetail';
 import PrivateRoute from './PrivateRoute';
 import Navbar from '../components/Navbar';
 import { useUser } from '../context/UserContext';
@@ -57,6 +58,14 @@ const AppRouter = () => {
                     element={
                         <PrivateRoute>
                             <ProductEdit />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/products/:productId"
+                    element={
+                        <PrivateRoute>
+                            <ProductDetail />
                         </PrivateRoute>
                     }
                 />
