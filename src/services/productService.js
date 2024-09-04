@@ -29,7 +29,7 @@ export const addProduct = async (productData) => {
 export const updateProduct = async (productId, updatedData) => {
     try {
         const productRef = doc(db, 'products', productId);
-        await updateDoc(productRef, updatedData);
+        await updateDoc(productRef, updatedData);  // Update Firestore doc with new data
         return { id: productId, ...updatedData };
     } catch (error) {
         throw new Error('Failed to update product: ' + error.message);

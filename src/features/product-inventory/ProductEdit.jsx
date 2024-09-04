@@ -12,7 +12,11 @@ const ProductEdit = () => {
 
     useEffect(() => {
         const foundProduct = products.find((p) => p.id === productId);
-        setProduct(foundProduct);
+        if (foundProduct) {
+            setProduct(foundProduct);
+        } else {
+            console.error(`Product with ID ${productId} not found.`);
+        }
     }, [productId, products]);
 
     const validationSchema = Yup.object().shape({
@@ -24,6 +28,7 @@ const ProductEdit = () => {
         stock: Yup.number()
             .required('Stock quantity is required')
             .min(0, 'Stock cannot be negative'),
+        imageUrl: Yup.string().url('Invalid URL format').required('Image URL is required'),
     });
 
     const handleSubmit = async (values) => {
@@ -47,6 +52,7 @@ const ProductEdit = () => {
                     price: product.price,
                     description: product.description || '',
                     stock: product.stock,
+                    imageUrl: product.imageUrl || '', // Add imageUrl field to initial values
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
@@ -103,6 +109,19 @@ const ProductEdit = () => {
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             />
                             <ErrorMessage name="stock" component="div" className="text-red-500 text-sm mt-1" />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
+                                Image URL
+                            </label>
+                            <Field
+                                type="text"
+                                id="imageUrl"
+                                name="imageUrl"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                            <ErrorMessage name="imageUrl" component="div" className="text-red-500 text-sm mt-1" />
                         </div>
 
                         <div className="flex items-center justify-between">

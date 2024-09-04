@@ -38,10 +38,10 @@ const useProducts = () => {
 
     const handleUpdateProduct = async (productId, updatedData) => {
         try {
-            const updatedProduct = await updateProduct(productId, updatedData);
+            await updateProduct(productId, updatedData);  // Update product in Firestore
             setProducts((prevProducts) =>
                 prevProducts.map((product) =>
-                    product.id === productId ? updatedProduct : product
+                    product.id === productId ? { ...product, ...updatedData } : product
                 )
             );
         } catch (err) {

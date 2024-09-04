@@ -54,7 +54,7 @@ const AppRouter = () => {
                     }
                 />
                 <Route
-                    path="/products/edit/:id"
+                    path="/products/edit/:productId"
                     element={
                         <PrivateRoute>
                             <ProductEdit />

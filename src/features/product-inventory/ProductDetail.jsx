@@ -8,13 +8,10 @@ const ProductDetail = () => {
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        console.log('Product ID from URL:', productId);
-        console.log('All products:', products);
 
         if (!loading && products.length > 0) {
             const foundProduct = products.find((p) => p.id === productId);
             setProduct(foundProduct);
-            console.log('Found product:', foundProduct);
         }
     }, [loading, products, productId]);
 
