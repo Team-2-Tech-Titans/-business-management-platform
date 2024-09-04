@@ -15,6 +15,7 @@ import ProductDetail from '../features/product-inventory/ProductDetail';
 import PrivateRoute from './PrivateRoute';
 import Navbar from '../components/Navbar';
 import { useUser } from '../context/UserContext';
+import Footer from '../components/Footer';
 
 const AppRouter = () => {
     const { user } = useUser(); // Check if the user is logged in
@@ -27,7 +28,6 @@ const AppRouter = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />  {/* Add the Register Route */}
-
                 {/* Private Routes */}
                 <Route
                     path="/dashboard"
@@ -102,6 +102,7 @@ const AppRouter = () => {
                     }
                 />
             </Routes>
+            <Footer />
         </>
     );
 };
