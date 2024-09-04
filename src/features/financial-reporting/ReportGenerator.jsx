@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useFinancialData from '../../hooks/useFinancialData';
 
 const ReportGenerator = () => {
-    const { financialData, loading, error, handleGenerateCSV, handleGeneratePDF } = useFinancialData('transactions');
+    const { handleGenerateCSV, handleGeneratePDF } = useFinancialData('transactions');
     const [reportType, setReportType] = useState('csv');
 
     const handleGenerateReport = () => {
@@ -12,9 +12,6 @@ const ReportGenerator = () => {
             handleGeneratePDF('financial_report.pdf', 'Financial Report');
         }
     };
-
-    if (loading) return <p>Loading financial data...</p>;
-    if (error) return <p>Error: {error}</p>;
 
     return (
         <div className="bg-white p-6 shadow rounded-lg">

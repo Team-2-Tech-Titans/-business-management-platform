@@ -16,6 +16,8 @@ const Navbar = () => {
                     <Link to="/products" className="hover:underline">Products</Link>
                     <Link to="/orders" className="hover:underline">Orders</Link>
                     <Link to="/profile" className="hover:underline">Profile</Link>
+                    <Link to="/financial-reports" className="hover:underline">Financial Reports</Link>
+                    <Link to="/user-management" className="hover:underline">User Management</Link>
                     <button onClick={logout} className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">
                         Logout
                     </button>

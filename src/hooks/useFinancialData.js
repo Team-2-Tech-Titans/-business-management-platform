@@ -25,29 +25,32 @@ const useFinancialData = (collectionName, filters = {}) => {
         };
         loadFinancialData();
     }, [collectionName, filters]);
-    const handleGenerateCSV = (fileName = 'financial_report.csv') => {
+
+    const handleGenerateCSV = (fileName) => {
         try {
             generateCSVReport(financialData, fileName);
         } catch (err) {
-            setError('Failed to generate CSV report: ' + err.message);
+            setError(`Failed to generate CSV report: ${err.message}`);
         }
     };
-    const handleGeneratePDF = (fileName = 'financial_report.pdf', title = 'Financial Report') => {
+
+    const handleGeneratePDF = (fileName, title) => {
         try {
             generatePDFReport(financialData, fileName, title);
         } catch (err) {
-            setError('Failed to generate PDF report: ' + err.message);
+            setError(`Failed to generate PDF report: ${err.message}`);
         }
     };
+
     const handleReconcileTransactions = () => {
         try {
-            const reconciliationResult = reconcileTransactions(financialData);
-            return reconciliationResult;
+            return reconcileTransactions(financialData);
         } catch (err) {
-            setError('Failed to reconcile transactions: ' + err.message);
+            setError(`Failed to reconcile transactions: ${err.message}`);
             return null;
         }
     };
+
     return {
         financialData,
         loading,

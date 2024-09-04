@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import useFinancialData from '../../hooks/useFinancialData';
 
@@ -6,11 +7,11 @@ const Reconciliation = () => {
     const [reconciliationResult, setReconciliationResult] = useState(null);
 
     useEffect(() => {
-        if (financialData.length > 0) {
+        if (financialData.length) {
             const result = handleReconcileTransactions();
             setReconciliationResult(result);
         }
-    }, [financialData, handleReconcileTransactions]);
+    }, [financialData]);
 
     if (loading) return <p>Loading financial data...</p>;
     if (error) return <p>Error: {error}</p>;
