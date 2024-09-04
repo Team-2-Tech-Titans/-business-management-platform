@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import ProductList from '../features/product-inventory/ProductList';
 import ProductDetail from '../features/product-inventory/ProductDetail';
-import ProductForm from '../features/product-inventory/ProductForm'; // Import ProductForm
-import { fetchProducts, deleteProduct } from '../services/productService';
+import ProductForm from '../features/product-inventory/ProductForm';
+import { fetchProducts, deleteProduct, addProduct } from '../services/productService'; // Import addProduct
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [showProductForm, setShowProductForm] = useState(false); // State to manage form visibility
+    const [showProductForm, setShowProductForm] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -29,7 +29,7 @@ const ProductsPage = () => {
     const handleProductSelect = (productId) => {
         const product = products.find((p) => p.id === productId);
         setSelectedProduct(product);
-        setShowProductForm(false); // Hide the form when selecting a product
+        setShowProductForm(false);
     };
 
     const handleProductDelete = async (productId) => {
@@ -43,13 +43,18 @@ const ProductsPage = () => {
     };
 
     const handleAddProduct = () => {
-        setShowProductForm(!showProductForm); // Toggle form visibility
-        setSelectedProduct(null); // Reset selected product
+        setShowProductForm(!showProductForm);
+        setSelectedProduct(null);
     };
 
-    const handleFormSubmit = (newProduct) => {
-        setProducts([...products, newProduct]); // Add new product to the list
-        setShowProductForm(false); // Hide the form after submission
+    const handleFormSubmit = async (newProduct) => {
+        try {
+            const addedProduct = await addProduct(newProduct); // Save to Firestore
+            setProducts([...products, addedProduct]); // Add to the UI list
+            setShowProductForm(false); // Hide the form after submission
+        } catch (err) {
+            console.error('Error adding product:', err);
+        }
     };
 
     return (
