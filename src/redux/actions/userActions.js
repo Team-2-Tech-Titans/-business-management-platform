@@ -24,7 +24,7 @@ import {
 } from '../../services/authService';
 
 import { db } from '../../services/firebase';
-import { getDocs, collection, doc, updateDoc } from 'firebase/firestore';
+import { getDocs, collection, doc, updateDoc, getDoc } from 'firebase/firestore';
 
 // Action to log in a user
 export const loginUser = (credentials) => async (dispatch) => {
@@ -73,9 +73,9 @@ export const updateUserProfile = (updatedData) => async (dispatch) => {
 export const fetchUsers = () => async (dispatch) => {
     dispatch({ type: FETCH_USERS_REQUEST });
     try {
-        const usersCollection = collection(db, 'users');
+        const usersCollection = collection(db, 'clients'); // Ensure you're fetching clients collection
         const userSnapshot = await getDocs(usersCollection);
-        const users = userSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const users = userSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
         dispatch({ type: FETCH_USERS_SUCCESS, payload: users });
     } catch (error) {
@@ -86,10 +86,15 @@ export const fetchUsers = () => async (dispatch) => {
 // Action to block a user
 export const blockUser = (userId) => async (dispatch) => {
     try {
-        const userDocRef = doc(db, 'users', userId);
-        await updateDoc(userDocRef, { isBlocked: true });
+        const userDocRef = doc(db, 'clients', userId); // Ensure you are using the correct collection
+        const userDoc = await getDoc(userDocRef);
 
-        dispatch({ type: BLOCK_USER_SUCCESS, payload: userId });
+        if (userDoc.exists()) {
+            await updateDoc(userDocRef, { isBlocked: true });
+            dispatch({ type: BLOCK_USER_SUCCESS, payload: userId });
+        } else {
+            console.error('User document does not exist.');
+        }
     } catch (error) {
         console.error('Failed to block user:', error.message);
     }
@@ -98,10 +103,15 @@ export const blockUser = (userId) => async (dispatch) => {
 // Action to unblock a user
 export const unblockUser = (userId) => async (dispatch) => {
     try {
-        const userDocRef = doc(db, 'users', userId);
-        await updateDoc(userDocRef, { isBlocked: false });
+        const userDocRef = doc(db, 'clients', userId); // Ensure you are using the correct collection
+        const userDoc = await getDoc(userDocRef);
 
-        dispatch({ type: UNBLOCK_USER_SUCCESS, payload: userId });
+        if (userDoc.exists()) {
+            await updateDoc(userDocRef, { isBlocked: false });
+            dispatch({ type: UNBLOCK_USER_SUCCESS, payload: userId });
+        } else {
+            console.error('User document does not exist.');
+        }
     } catch (error) {
         console.error('Failed to unblock user:', error.message);
     }
