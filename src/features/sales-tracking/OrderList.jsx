@@ -21,10 +21,11 @@ const OrderList = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {orders.map((order) => (
                     <div key={order.id} className="bg-white p-4 shadow rounded-lg">
+                        {console.log(order)}
                         <h2 className="text-xl font-semibold mb-2">Order ID: {order.id}</h2>
                         <p className="text-gray-700 mb-2">Customer: {order.customerName}</p>
                         <p className="text-gray-700 mb-2">Status: {order.status}</p>
-                        <p className="text-gray-700 mb-4">Total: ${order.items.reduce((sum, item) => sum + item.quantity * item.price, 0).toFixed(2)}</p>
+                        <p className="text-gray-700 mb-4">Total: ${order.items.reduce((sum, item) => sum + Number(item.quantity) * Number(item.price), 0).toFixed(2)}</p>
                         <div className="flex justify-between items-center">
                             <Link
                                 to={`/orders/${order.id}`}

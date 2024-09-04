@@ -34,7 +34,7 @@ const chartTypes = {
     pie: Pie,
 };
 
-const ChartComponent = ({ type, data, options, className = '' }) => {
+const ChartComponent = ({ data = {}, options = {}, type = 'bar', className = '' }) => {
     const ChartType = chartTypes[type] || Line;
 
     return (
@@ -51,9 +51,5 @@ ChartComponent.propTypes = {
     className: PropTypes.string,
 };
 
-ChartComponent.defaultProps = {
-    options: {},
-    className: '',
-};
 
 export default ChartComponent;

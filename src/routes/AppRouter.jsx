@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import ProductsPage from '../pages/ProductsPage';
-import OrdersPage from '../pages/OrdersPage';
+import OrderManagement from '../features/sales-tracking/OrderManagement';
 import UserProfilePage from '../pages/UserProfilePage';
 import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
@@ -70,10 +70,10 @@ const AppRouter = () => {
                     }
                 />
                 <Route
-                    path="/orders"
+                    path="/orders/*"  // Add the wildcard to match nested routes
                     element={
                         <PrivateRoute>
-                            <OrdersPage />
+                            <OrderManagement />
                         </PrivateRoute>
                     }
                 />

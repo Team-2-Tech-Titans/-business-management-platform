@@ -39,9 +39,18 @@ const OrderForm = () => {
             Yup.object().shape({
                 productId: Yup.string().required('Product is required'),
                 quantity: Yup.number().required('Quantity is required').min(1, 'Quantity must be at least 1'),
+                price: Yup.number().required('Price is required').positive('Price must be positive'),
             })
         ),
     });
+
+    const handleProductChange = (productId, index, setFieldValue) => {
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            setFieldValue(`items[${index}].productId`, productId);
+            setFieldValue(`items[${index}].price`, product.price); // Set product price
+        }
+    };
 
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
@@ -63,9 +72,7 @@ const OrderForm = () => {
 
     return (
         <div className="bg-white p-6 shadow rounded-lg">
-            <h1 className="text-2xl font-semibold mb-4">
-                {orderId ? 'Edit Order' : 'Create New Order'}
-            </h1>
+            <h1 className="text-2xl font-semibold mb-4">{orderId ? 'Edit Order' : 'Create New Order'}</h1>
             <Formik
                 initialValues={order}
                 validationSchema={validationSchema}
@@ -132,6 +139,7 @@ const OrderForm = () => {
                                                 id={`items[${index}].productId`}
                                                 name={`items[${index}].productId`}
                                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                onChange={(e) => handleProductChange(e.target.value, index, setFieldValue)}
                                             >
                                                 <option value="">Select product</option>
                                                 {products.map((product) => (
@@ -155,13 +163,27 @@ const OrderForm = () => {
                                             />
                                             <ErrorMessage name={`items[${index}].quantity`} component="div" className="text-red-500 text-sm mt-1" />
                                         </div>
+
+                                        <div className="flex-1 ml-2">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor={`items[${index}].price`}>
+                                                Price
+                                            </label>
+                                            <Field
+                                                type="number"
+                                                id={`items[${index}].price`}
+                                                name={`items[${index}].price`}
+                                                readOnly
+                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            />
+                                            <ErrorMessage name={`items[${index}].price`} component="div" className="text-red-500 text-sm mt-1" />
+                                        </div>
                                     </div>
                                 </div>
                             ))}
 
                             <button
                                 type="button"
-                                onClick={() => setFieldValue('items', [...values.items, { productId: '', quantity: 1 }])}
+                                onClick={() => setFieldValue('items', [...values.items, { productId: '', quantity: 1, price: 0 }])}
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
                                 Add Item

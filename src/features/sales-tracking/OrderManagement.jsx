@@ -8,10 +8,17 @@ const OrderManagement = () => {
     return (
         <div className="p-6">
             <Routes>
+                {/* Default route for /orders/ */}
                 <Route path="/" element={<OrderList />} />
-                <Route path="/new" element={<OrderForm />} />
-                <Route path="/:orderId" element={<OrderDetail />} />
-                <Route path="/:orderId/edit" element={<OrderForm />} />
+
+                {/* For /orders/new */}
+                <Route path="new" element={<OrderForm />} />
+
+                {/* For /orders/:orderId */}
+                <Route path=":orderId" element={<OrderDetail />} />
+
+                {/* For /orders/:orderId/edit */}
+                <Route path=":orderId/edit" element={<OrderForm />} />
             </Routes>
         </div>
     );
