@@ -2,16 +2,24 @@ import React, { useState } from 'react';
 import useFinancialData from '../../hooks/useFinancialData';
 
 const ReportGenerator = () => {
-    const { handleGenerateCSV, handleGeneratePDF } = useFinancialData('transactions');
+    const { financialData, loading, error, handleGenerateCSV, handleGeneratePDF } = useFinancialData('transactions');
     const [reportType, setReportType] = useState('csv');
 
     const handleGenerateReport = () => {
+        if (!financialData.length) {
+            console.error('No financial data available for generating the report.');
+            return;
+        }
+
         if (reportType === 'csv') {
             handleGenerateCSV('financial_report.csv');
         } else if (reportType === 'pdf') {
             handleGeneratePDF('financial_report.pdf', 'Financial Report');
         }
     };
+
+    if (loading) return <p>Loading financial data...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <div className="bg-white p-6 shadow rounded-lg">

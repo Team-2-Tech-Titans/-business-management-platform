@@ -7,11 +7,11 @@ const Reconciliation = () => {
     const [reconciliationResult, setReconciliationResult] = useState(null);
 
     useEffect(() => {
-        if (financialData.length) {
+        if (financialData && financialData.length > 0 && !reconciliationResult) {
             const result = handleReconcileTransactions();
             setReconciliationResult(result);
         }
-    }, [financialData]);
+    }, [financialData, reconciliationResult]); // handleReconcileTransactions removed from dependencies
 
     if (loading) return <p>Loading financial data...</p>;
     if (error) return <p>Error: {error}</p>;
