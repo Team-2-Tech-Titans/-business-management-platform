@@ -9,13 +9,15 @@ import DashboardPage from '../pages/DashboardPage';
 import FinancialReportsPage from '../pages/FinancialReportsPage';
 import UserManagementPage from '../pages/UserManagementPage';
 import RegisterPage from '../pages/RegisterPage';  // Import the Register Page
+import ProductForm from '../features/product-inventory/ProductForm'; // Import ProductForm
+import ProductEdit from '../features/product-inventory/ProductEdit'; // Import ProductEdit
 import PrivateRoute from './PrivateRoute';
-
 import Navbar from '../components/Navbar';
 import { useUser } from '../context/UserContext';
 
 const AppRouter = () => {
     const { user } = useUser(); // Check if the user is logged in
+
     return (
         <>
             {user && <Navbar />} {/* Render Navbar only if the user is logged in */}
@@ -39,6 +41,22 @@ const AppRouter = () => {
                     element={
                         <PrivateRoute>
                             <ProductsPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/products/new"
+                    element={
+                        <PrivateRoute>
+                            <ProductForm />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/products/edit/:id"
+                    element={
+                        <PrivateRoute>
+                            <ProductEdit />
                         </PrivateRoute>
                     }
                 />
